@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh_cn">
+    <meta charset="UTF-8">
+    <title>demo多维选择框</title>
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+</head>
+<body>
+<div id="myselect">
+
+<select id="parent" style="display: block;float:left;">
+    <option value="0">--------</option>
+    <option value="1">体育</option>
+    <option value="2">fuck</option>
+    <option value="3">fuck1</option>
+    <option value="4">fuck2</option>
+</select>
+    <div id="child" style="float:left"></div>
+    <input type="text" name="partentId"  id="pid" value="0"/>
+    </div>
+</body>
+<script>
+    $(function(){
+        $("#myselect").on("change","select",function(){
+            var my = $(this);
+            console.log(my.val());
+            if(my.val() == 0){
+                alert("请选择");
+            } else {
+
+
+                $.post("getChild.php",{pid:my.val()},function(data){
+                    var lastVla =$("#child select:last").val();
+                    console.info(lastVla);
+                    $("#pid").val(lastVla);
+                    console.info(data);
+                    if(data) {
+                        var mhtml = "<select class='son' name=pid" + my.val() + ">";
+                        $.each(data, function (n, mychild) {
+                            mhtml += "<option value='" + mychild.id + "'>" + mychild.name + "</option>";
+                        });
+                        mhtml += "</select>";
+                        if (my.attr("id") == "parent") {
+                            $("#child").empty().append(mhtml);
+                        } else {
+                            $("#child").append(mhtml);
+                        }
+                    }
+                },'json');
+            }
+        });
+    });
+</script>
+</html>
