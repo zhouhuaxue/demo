@@ -10,6 +10,7 @@ $array = array(
     array('id'=>'123','name'=>'cccc'),
     array('id'=>'1213','name'=>'ccc11c'),
     array('id'=>'12113','name'=>'cc222cc'),
+	array('id'=>'12113','name'=>'cc222cc'),
 );
 
 echo json_encode($array);
